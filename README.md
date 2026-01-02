@@ -126,17 +126,42 @@ See [MVP_PLAN.md](./MVP_PLAN.md) for detailed step-by-step development plan.
 ### Prerequisites
 - Docker and Docker Compose
 - Git
+- direnv (for environment variable management)
 
 ### Local Development Setup
 
 The application runs in a Docker environment for local development:
 
 1. Clone the repository
-2. Copy `.env.example` to `.env` and configure
-3. Run `docker-compose up` to start all services
-4. Access the application at `http://localhost:3000` (or configured port)
+2. Configure environment variables using direnv:
+   - The project uses `.envrc` for environment variable management
+   - Copy `.envrc.dist` to `.envrc` if you need custom values (optional)
+   - direnv will automatically load the environment variables
+   - If you don't use direnv, you can manually source `.envrc.dist`
+3. Start all services with Docker Compose:
+   ```bash
+   docker-compose up
+   ```
+4. Access the application:
+   - Frontend: http://localhost:3000
+   - Backend API: http://localhost:3001
+   - Health check: http://localhost:3001/health
 
-_Detailed setup instructions will be added as development progresses_
+### Building and Running Services Individually
+
+#### Backend
+```bash
+cd backend
+npm install
+npm run dev
+```
+
+#### Frontend
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
 ## Database Schema
 
@@ -279,5 +304,3 @@ For questions about commercial licensing, please contact the project maintainer.
    - Offer alerts
    - Advanced analytics
    - User groups and sharing
-
-    

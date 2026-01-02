@@ -1,0 +1,19 @@
+# Database Configuration
+export POSTGRES_USER=shopping_planner
+export POSTGRES_PASSWORD=shopping_planner_pass
+export POSTGRES_DB=shopping_planner
+export POSTGRES_PORT=5432
+
+# Backend Configuration
+export NODE_ENV=development
+export BACKEND_PORT=3001
+export JWT_SECRET=your-secret-key-change-in-production
+export JWT_EXPIRES_IN=7d
+
+# Frontend Configuration
+export FRONTEND_PORT=3000
+export NEXT_PUBLIC_API_URL=http://localhost:3001
+
+# Production Settings (for future use)
+# export DATABASE_URL=postgresql://user:password@host:5432/database
+
