@@ -11,23 +11,23 @@ The MVP will focus on core functionality: user authentication, managing products
 ### Phase 1: Project Setup & Infrastructure
 
 #### Step 1.1: Docker Setup
-- [ ] Create Docker Compose configuration
-- [ ] Set up PostgreSQL container
-- [ ] Set up backend container (Node.js/Express)
-- [ ] Set up frontend container (Next.js)
-- [ ] Configure networking between containers
-- [ ] Set up volume mounts for development
-- [ ] Create .env.example file
-- [ ] Test Docker setup locally
+- [x] Create Docker Compose configuration
+- [x] Set up PostgreSQL container
+- [x] Set up backend container (Node.js/Express)
+- [x] Set up frontend container (Next.js)
+- [x] Configure networking between containers
+- [x] Set up volume mounts for development
+- [x] Create .envrc / .envrc.dist file
+- [x] Test Docker setup locally
 
 #### Step 1.2: Initialize Project Structure
-- [ ] Create project directory structure
-- [ ] Initialize Git repository
-- [ ] Set up package.json files (frontend and backend)
-- [ ] Configure TypeScript (for Next.js frontend)
-- [ ] Set up ESLint and Prettier
-- [ ] Create .gitignore files
-- [ ] Add Docker-related files to .gitignore
+- [x] Create project directory structure
+- [x] Initialize Git repository
+- [x] Set up package.json files (frontend and backend)
+- [x] Configure TypeScript (for Next.js frontend)
+- [x] Set up ESLint and Prettier
+- [x] Create .gitignore files
+- [x] Add Docker-related files to .gitignore
 
 #### Step 1.3: Database Setup
 - [ ] Create PostgreSQL database schema:
