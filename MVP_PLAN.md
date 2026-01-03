@@ -30,24 +30,24 @@ The MVP will focus on core functionality: user authentication, managing products
 - [x] Add Docker-related files to .gitignore
 
 #### Step 1.3: Database Setup
-- [ ] Create PostgreSQL database schema:
-  - [ ] Users table
-  - [ ] Shops table
-  - [ ] Products table
-  - [ ] Shopping Lists table
-  - [ ] Shopping List Items table
-  - [ ] Offers table
-- [ ] Create database migrations
-- [ ] Set up database connection in backend
-- [ ] Test database connection from backend
+- [x] Create PostgreSQL database schema:
+  - [x] Users table
+  - [x] Shops table
+  - [x] Products table
+  - [x] Shopping Lists table
+  - [x] Shopping List Items table
+  - [x] Offers table
+- [x] Create database migrations
+- [x] Set up database connection in backend
+- [x] Test database connection from backend
 
 #### Step 1.4: Backend Foundation
-- [ ] Initialize backend framework (Node.js/Express with TypeScript)
-- [ ] Set up environment variables (.env)
-- [ ] Configure CORS
-- [ ] Set up error handling middleware
-- [ ] Create basic health check endpoint
-- [ ] Set up logging
+- [x] Initialize backend framework (Node.js/Express with TypeScript)
+- [x] Set up environment variables (.env)
+- [x] Configure CORS
+- [x] Set up error handling middleware
+- [x] Create basic health check endpoint
+- [x] Set up logging
 
 ### Phase 2: Backend API Development
 
