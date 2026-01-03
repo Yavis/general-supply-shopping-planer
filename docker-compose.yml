@@ -13,7 +13,6 @@ services:
       - "${POSTGRES_PORT:-5432}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./backend/database/init:/docker-entrypoint-initdb.d
     networks:
       - shopping-planner-network
     healthcheck:
@@ -31,7 +30,12 @@ services:
     environment:
       NODE_ENV: ${NODE_ENV:-development}
       PORT: ${BACKEND_PORT:-3001}
-      DATABASE_URL: postgresql://${POSTGRES_USER:-shopping_planner}:${POSTGRES_PASSWORD:-shopping_planner_pass}@postgres:5432/${POSTGRES_DB:-shopping_planner}
+      DATABASE_URL: postgresql://${POSTGRES_USER:-shopping_planner}:${POSTGRES_PASSWORD:-shopping_planner_pass}@postgres:5432/${POSTGRES_DB:-shopping_planner}?schema=public
+      POSTGRES_HOST: ${POSTGRES_HOST:-postgres}
+      POSTGRES_USER: ${POSTGRES_USER:-shopping_planner}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-shopping_planner_pass}
+      POSTGRES_DB: ${POSTGRES_DB:-shopping_planner}
+      POSTGRES_PORT: ${POSTGRES_PORT:-5432}
       JWT_SECRET: ${JWT_SECRET:-your-secret-key-change-in-production}
       JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-7d}
     ports:
@@ -44,7 +48,7 @@ services:
         condition: service_healthy
     networks:
       - shopping-planner-network
-    command: npm run dev
+    command: sh -c "npm run db:generate && npm run db:migrate:deploy && npm run dev"
 
   # Frontend (Next.js)
   frontend:

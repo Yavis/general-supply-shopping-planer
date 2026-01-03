@@ -1,8 +1,12 @@
 # Database Configuration
+export POSTGRES_HOST=postgres
 export POSTGRES_USER=shopping_planner
 export POSTGRES_PASSWORD=shopping_planner_pass
 export POSTGRES_DB=shopping_planner
 export POSTGRES_PORT=5432
+
+# Prisma Database URL (used by Prisma)
+export DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}?schema=public
 
 # Backend Configuration
 export NODE_ENV=development

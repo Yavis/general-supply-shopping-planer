@@ -1,0 +1,125 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum ShoppingListItemStatus {
+  pending
+  bought
+  not_bought
+  wrong_price
+  not_available
+}
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String   @map("password_hash")
+  name         String?
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  shops          Shop[]
+  products       Product[]
+  shoppingLists  ShoppingList[]
+
+  @@map("users")
+}
+
+model Shop {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  name      String
+  address   String?
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  products Product[]
+  offers   Offer[]
+
+  @@index([userId])
+  @@map("shops")
+}
+
+model Product {
+  id           String   @id @default(uuid())
+  userId       String   @map("user_id")
+  name         String
+  size         String?
+  price        Decimal  @db.Decimal(10, 2)
+  pricePerUnit Decimal? @map("price_per_unit") @db.Decimal(10, 2)
+  shopId       String   @map("shop_id")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  user            User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  shop            Shop                @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  shoppingListItems ShoppingListItem[]
+  offers          Offer[]
+
+  @@index([userId])
+  @@index([shopId])
+  @@index([name])
+  @@map("products")
+}
+
+model ShoppingList {
+  id         String   @id @default(uuid())
+  userId     String   @map("user_id")
+  name       String?
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+  completedAt DateTime? @map("completed_at")
+
+  user  User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items ShoppingListItem[]
+
+  @@index([userId])
+  @@map("shopping_lists")
+}
+
+model ShoppingListItem {
+  id             String                @id @default(uuid())
+  shoppingListId String                @map("shopping_list_id")
+  productId      String                @map("product_id")
+  status         ShoppingListItemStatus @default(pending)
+  actualPrice    Decimal?              @map("actual_price") @db.Decimal(10, 2)
+  notes          String?
+  createdAt      DateTime              @default(now()) @map("created_at")
+  updatedAt      DateTime              @updatedAt @map("updated_at")
+
+  shoppingList ShoppingList @relation(fields: [shoppingListId], references: [id], onDelete: Cascade)
+  product      Product      @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([shoppingListId])
+  @@index([productId])
+  @@index([status])
+  @@map("shopping_list_items")
+}
+
+model Offer {
+  id        String   @id @default(uuid())
+  productId String   @map("product_id")
+  shopId    String   @map("shop_id")
+  offerPrice Decimal  @map("offer_price") @db.Decimal(10, 2)
+  startTime DateTime  @map("start_time")
+  endTime   DateTime  @map("end_time")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  shop    Shop    @relation(fields: [shopId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+  @@index([shopId])
+  @@index([startTime, endTime])
+  @@map("offers")
+}
+
