@@ -18,7 +18,7 @@ jobs:
       uses: docker/setup-buildx-action@v3
 
     - name: Start Docker Compose
-      run: docker-compose up -d --build
+      run: docker compose up -d --build
 
     - name: Wait for backend health check
       run: |
@@ -40,5 +40,5 @@ jobs:
         curl -f http://localhost:3000 || (echo "Frontend not reachable" && exit 1)
 
     - name: Stop Docker Compose
-      run: docker-compose down
+      run: docker compose down
       if: always()
