@@ -1,4 +1,6 @@
 import { PrismaClient } from '@prisma/client';
+import { PrismaPg } from '@prisma/adapter-pg';
+import { Pool } from 'pg';
 
 // Get database URL from environment
 const databaseUrl = process.env.DATABASE_URL || 
@@ -6,9 +8,11 @@ const databaseUrl = process.env.DATABASE_URL ||
 
 
 // Create Prisma Client instance with connection URL
-// Prisma 7: Pass datasourceUrl directly or use adapter
+// Prisma 7: Use adapter with PostgreSQL Pool
+const pool = new Pool({ connectionString: databaseUrl });
+const adapter = new PrismaPg(pool);
 const prisma = new PrismaClient({
-  datasourceUrl: 'postgresql://shopping_planner:shopping_planner_pass@postgres:5432/shopping_planner?schema=public',
+  adapter,
   log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
 });
 
