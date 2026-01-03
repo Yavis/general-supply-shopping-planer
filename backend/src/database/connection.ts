@@ -11,7 +11,7 @@ const databaseUrl = process.env.DATABASE_URL ||
 // Prisma 7: Use adapter with PostgreSQL Pool
 const pool = new Pool({ connectionString: databaseUrl });
 const adapter = new PrismaPg(pool);
-const prisma = new PrismaClient({
+export const prisma = new PrismaClient({
   adapter,
   log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
 });

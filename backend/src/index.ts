@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { testConnection, closeConnection } from './database/connection';
+import authRoutes from './routes/auth';
 
 dotenv.config();
 
@@ -25,7 +26,9 @@ app.get('/health', async (_req, res) => {
   });
 });
 
-// API routes will be added here
+// API routes
+app.use('/api/auth', authRoutes);
+
 app.get('/api', (_req, res) => {
   res.json({
     message: 'Shopping Planner API',

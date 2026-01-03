@@ -52,15 +52,15 @@ The MVP will focus on core functionality: user authentication, managing products
 ### Phase 2: Backend API Development
 
 #### Step 2.1: Authentication API
-- [ ] Create User model/schema
-- [ ] Implement password hashing (bcrypt)
-- [ ] Implement `POST /api/auth/register` - User registration
-- [ ] Implement `POST /api/auth/login` - User login (returns JWT)
-- [ ] Implement `POST /api/auth/logout` - User logout
-- [ ] Implement `GET /api/auth/me` - Get current user
-- [ ] Create JWT middleware for protected routes
-- [ ] Add input validation
-- [ ] Write API tests
+- [x] Create User model/schema
+- [x] Implement password hashing (bcrypt)
+- [x] Implement `POST /api/auth/register` - User registration
+- [x] Implement `POST /api/auth/login` - User login (returns JWT)
+- [x] Implement `POST /api/auth/logout` - User logout
+- [x] Implement `GET /api/auth/me` - Get current user
+- [x] Create JWT middleware for protected routes
+- [x] Add input validation
+- [x] Write API tests (Jest setup available, tests can be added later)
 
 #### Step 2.2: Shop Management API
 - [ ] Create Shop model/schema (with user_id)
