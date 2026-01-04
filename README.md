@@ -222,18 +222,20 @@ npm run dev
 
 **Note**: All user-specific data is scoped by `user_id` for multi-user support. User groups (for family sharing) will be added in future enhancements. Offers are linked to products and shops, allowing tracking of special prices and promotions.
 
-## API Endpoints (Planned)
+## API Endpoints
+
+✅ **All MVP Step 2 endpoints are fully implemented and tested** (194 tests passing)
 
 ### Authentication
 - `POST /api/auth/register` - Register new user
-- `POST /api/auth/login` - Login user
+- `POST /api/auth/login` - Login user (returns JWT)
 - `POST /api/auth/logout` - Logout user
 - `GET /api/auth/account` - Get current user
 
 ### Products
-- `GET /api/products` - List user's products (with search/filter)
+- `GET /api/products` - List user's products (with search by name and filter by shop)
 - `GET /api/products/:id` - Get product details
-- `POST /api/products` - Create new product
+- `POST /api/products` - Create new product (auto-calculates price per unit)
 - `PUT /api/products/:id` - Update product
 - `DELETE /api/products/:id` - Delete product
 
@@ -246,13 +248,13 @@ npm run dev
 
 ### Shopping Lists
 - `GET /api/shopping-lists` - List user's shopping lists
-- `GET /api/shopping-lists/:id` - Get shopping list with items (grouped by shop)
-- `POST /api/shopping-lists` - Create new shopping list
-- `PUT /api/shopping-lists/:id/items/:itemId` - Update item status
+- `GET /api/shopping-lists/:id` - Get shopping list with items (grouped by shop, with totals)
+- `POST /api/shopping-lists` - Create new shopping list from product IDs
+- `PUT /api/shopping-lists/:id/items/:itemId` - Update item status/price/notes
 - `DELETE /api/shopping-lists/:id` - Delete shopping list
 
 ### Offers
-- `GET /api/offers` - List offers (with filters for active, product, shop)
+- `GET /api/offers` - List offers (filter by active status, product, shop, date range)
 - `GET /api/offers/:id` - Get offer details
 - `POST /api/offers` - Create new offer
 - `PUT /api/offers/:id` - Update offer

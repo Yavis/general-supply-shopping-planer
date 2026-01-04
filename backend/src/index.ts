@@ -4,6 +4,9 @@ import dotenv from 'dotenv';
 import { testConnection, closeConnection } from './database/connection';
 import authRoutes from './routes/auth';
 import shopRoutes from './routes/shops';
+import productRoutes from './routes/products';
+import offerRoutes from './routes/offers';
+import shoppingListRoutes from './routes/shopping-lists';
 
 dotenv.config();
 
@@ -30,6 +33,9 @@ app.get('/health', async (_req, res) => {
 // API routes
 app.use('/api/auth', authRoutes);
 app.use('/api/shops', shopRoutes);
+app.use('/api/products', productRoutes);
+app.use('/api/offers', offerRoutes);
+app.use('/api/shopping-lists', shoppingListRoutes);
 
 app.get('/api', (_req, res) => {
   res.json({

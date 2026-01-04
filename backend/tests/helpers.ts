@@ -63,7 +63,7 @@ export const createAuthenticatedUser = async (options: CreateUserOptions = {}) =
 /**
  * Create a test shop for a user
  */
-export const createTestShop = async (userId: string, overrides = {}) => {
+export const createTestShop = async (userId: string, overrides: Record<string, unknown> = {}) => {
   return await prisma.shop.create({
     data: {
       userId,
@@ -80,7 +80,7 @@ export const createTestShop = async (userId: string, overrides = {}) => {
 export const createTestProduct = async (
   userId: string,
   shopId: string,
-  overrides = {}
+  overrides: Record<string, unknown> = {}
 ) => {
   return await prisma.product.create({
     data: {
@@ -95,13 +95,59 @@ export const createTestProduct = async (
   });
 };
 
-export { 
-  request, 
-  app, 
-  prisma,
-  createTestUser,
-  loginAndGetToken,
-  createAuthenticatedUser,
-  createTestShop,
-  createTestProduct
+/**
+ * Create a test offer for a product at a shop
+ */
+export const createTestOffer = async (
+  productId: string,
+  shopId: string,
+  overrides: Record<string, unknown> = {}
+) => {
+  return await prisma.offer.create({
+    data: {
+      productId,
+      shopId,
+      offerPrice: 7.99,
+      startTime: new Date(),
+      endTime: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days from now
+      ...overrides,
+    },
+  });
 };
+
+/**
+ * Create a test shopping list for a user
+ */
+export const createTestShoppingList = async (
+  userId: string,
+  overrides: Record<string, unknown> = {}
+) => {
+  return await prisma.shoppingList.create({
+    data: {
+      userId,
+      name: `Shopping List ${Date.now()}`,
+      ...overrides,
+    },
+  });
+};
+
+/**
+ * Create a test shopping list item
+ */
+export const createTestShoppingListItem = async (
+  shoppingListId: string,
+  productId: string,
+  overrides: Record<string, unknown> = {}
+) => {
+  return await prisma.shoppingListItem.create({
+    data: {
+      shoppingListId,
+      productId,
+      status: 'pending',
+      ...overrides,
+    },
+  });
+};
+
+// Re-export for convenience
+export { request, app, prisma };
