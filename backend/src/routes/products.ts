@@ -4,6 +4,7 @@ import { Prisma } from '@prisma/client';
 import { prisma } from '../database/connection';
 import { authenticateToken } from '../middleware/auth';
 import { calculatePricePerUnit } from '../utils/priceCalculator';
+import { productsRateLimiter } from '../middleware/rate-limit';
 
 const router = Router();
 
@@ -20,10 +21,11 @@ const updateProductSchema = z.object({
   shopId: z.string().uuid().optional(),
   size: z.string().max(50).optional().nullable(),
   price: z.number().positive().or(z.string().transform(val => parseFloat(val)).pipe(z.number().positive())).optional(),
+  pricePerUnit: z.number().positive().optional().nullable(),
 });
 
 // GET /api/products - List user's products with search/filter
-router.get('/', authenticateToken, async (req, res) => {
+router.get('/', authenticateToken, productsRateLimiter, async (req, res) => {
   try {
     if (!req.userId) {
       return res.status(401).json({ error: 'Unauthorized' });
@@ -71,7 +73,7 @@ router.get('/', authenticateToken, async (req, res) => {
 });
 
 // GET /api/products/:id - Get product details
-router.get('/:id', authenticateToken, async (req, res) => {
+router.get('/:id', authenticateToken, productsRateLimiter, async (req, res) => {
   try {
     if (!req.userId) {
       return res.status(401).json({ error: 'Unauthorized' });
@@ -107,7 +109,7 @@ router.get('/:id', authenticateToken, async (req, res) => {
 });
 
 // POST /api/products - Create product
-router.post('/', authenticateToken, async (req, res) => {
+router.post('/', authenticateToken, productsRateLimiter, async (req, res) => {
   try {
     if (!req.userId) {
       return res.status(401).json({ error: 'Unauthorized' });
@@ -160,7 +162,7 @@ router.post('/', authenticateToken, async (req, res) => {
 });
 
 // PUT /api/products/:id - Update product
-router.put('/:id', authenticateToken, async (req, res) => {
+router.put('/:id', authenticateToken, productsRateLimiter, async (req, res) => {
   try {
     if (!req.userId) {
       return res.status(401).json({ error: 'Unauthorized' });
@@ -226,7 +228,7 @@ router.put('/:id', authenticateToken, async (req, res) => {
 });
 
 // DELETE /api/products/:id - Delete product
-router.delete('/:id', authenticateToken, async (req, res) => {
+router.delete('/:id', authenticateToken, productsRateLimiter, async (req, res) => {
   try {
     if (!req.userId) {
       return res.status(401).json({ error: 'Unauthorized' });

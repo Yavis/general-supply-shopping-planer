@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { z } from 'zod';
 import { prisma } from '../database/connection';
 import { authenticateToken } from '../middleware/auth';
+import { shopsRateLimiter } from '../middleware/rate-limit';
 
 const router = Router();
 
@@ -17,7 +18,7 @@ const updateShopSchema = z.object({
 });
 
 // GET /api/shops - List user's shops
-router.get('/', authenticateToken, async (req, res) => {
+router.get('/', authenticateToken, shopsRateLimiter, async (req, res) => {
   try {
     if (!req.userId) {
       return res.status(401).json({ error: 'Unauthorized' });
@@ -42,7 +43,7 @@ router.get('/', authenticateToken, async (req, res) => {
 });
 
 // GET /api/shops/:id - Get shop details
-router.get('/:id', authenticateToken, async (req, res) => {
+router.get('/:id', authenticateToken, shopsRateLimiter, async (req, res) => {
   try {
     if (!req.userId) {
       return res.status(401).json({ error: 'Unauthorized' });
@@ -69,7 +70,7 @@ router.get('/:id', authenticateToken, async (req, res) => {
 });
 
 // POST /api/shops - Create shop
-router.post('/', authenticateToken, async (req, res) => {
+router.post('/', authenticateToken, shopsRateLimiter, async (req, res) => {
   try {
     if (!req.userId) {
       return res.status(401).json({ error: 'Unauthorized' });
@@ -96,7 +97,7 @@ router.post('/', authenticateToken, async (req, res) => {
 });
 
 // PUT /api/shops/:id - Update shop
-router.put('/:id', authenticateToken, async (req, res) => {
+router.put('/:id', authenticateToken, shopsRateLimiter, async (req, res) => {
   try {
     if (!req.userId) {
       return res.status(401).json({ error: 'Unauthorized' });
@@ -133,7 +134,7 @@ router.put('/:id', authenticateToken, async (req, res) => {
 });
 
 // DELETE /api/shops/:id - Delete shop
-router.delete('/:id', authenticateToken, async (req, res) => {
+router.delete('/:id', authenticateToken, shopsRateLimiter, async (req, res) => {
   try {
     if (!req.userId) {
       return res.status(401).json({ error: 'Unauthorized' });

@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { Prisma } from '@prisma/client';
 import { prisma } from '../database/connection';
 import { authenticateToken } from '../middleware/auth';
+import { offersRateLimiter } from '../middleware/rate-limit';
 
 const router = Router();
 
@@ -33,7 +34,7 @@ const getOffersQuerySchema = z.object({
 });
 
 // GET /api/offers - List offers with filters
-router.get('/', authenticateToken, async (req, res) => {
+router.get('/', authenticateToken, offersRateLimiter, async (req, res) => {
   try {
     if (!req.userId) {
       return res.status(401).json({ error: 'Unauthorized' });
@@ -109,7 +110,7 @@ router.get('/', authenticateToken, async (req, res) => {
 });
 
 // GET /api/offers/:id - Get offer details
-router.get('/:id', authenticateToken, async (req, res) => {
+router.get('/:id', authenticateToken, offersRateLimiter, async (req, res) => {
   try {
     if (!req.userId) {
       return res.status(401).json({ error: 'Unauthorized' });
@@ -155,7 +156,7 @@ router.get('/:id', authenticateToken, async (req, res) => {
 });
 
 // POST /api/offers - Create offer
-router.post('/', authenticateToken, async (req, res) => {
+router.post('/', authenticateToken, offersRateLimiter, async (req, res) => {
   try {
     if (!req.userId) {
       return res.status(401).json({ error: 'Unauthorized' });
@@ -231,7 +232,7 @@ router.post('/', authenticateToken, async (req, res) => {
 });
 
 // PUT /api/offers/:id - Update offer
-router.put('/:id', authenticateToken, async (req, res) => {
+router.put('/:id', authenticateToken, offersRateLimiter, async (req, res) => {
   try {
     if (!req.userId) {
       return res.status(401).json({ error: 'Unauthorized' });
@@ -311,7 +312,7 @@ router.put('/:id', authenticateToken, async (req, res) => {
 });
 
 // DELETE /api/offers/:id - Delete offer
-router.delete('/:id', authenticateToken, async (req, res) => {
+router.delete('/:id', authenticateToken, offersRateLimiter, async (req, res) => {
   try {
     if (!req.userId) {
       return res.status(401).json({ error: 'Unauthorized' });

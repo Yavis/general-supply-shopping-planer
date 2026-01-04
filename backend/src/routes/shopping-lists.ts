@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { Prisma } from '@prisma/client';
 import { prisma } from '../database/connection';
 import { authenticateToken } from '../middleware/auth';
+import { shoppingListsRateLimiter } from '../middleware/rate-limit';
 
 const router = Router();
 
@@ -19,7 +20,7 @@ const updateItemSchema = z.object({
 });
 
 // GET /api/shopping-lists - List user's shopping lists
-router.get('/', authenticateToken, async (req, res) => {
+router.get('/', authenticateToken, shoppingListsRateLimiter, async (req, res) => {
   try {
     if (!req.userId) {
       return res.status(401).json({ error: 'Unauthorized' });
@@ -52,7 +53,7 @@ router.get('/', authenticateToken, async (req, res) => {
 });
 
 // GET /api/shopping-lists/:id - Get shopping list with items grouped by shop
-router.get('/:id', authenticateToken, async (req, res) => {
+router.get('/:id', authenticateToken, shoppingListsRateLimiter, async (req, res) => {
   try {
     if (!req.userId) {
       return res.status(401).json({ error: 'Unauthorized' });
@@ -192,7 +193,7 @@ router.get('/:id', authenticateToken, async (req, res) => {
 });
 
 // POST /api/shopping-lists - Create shopping list with product IDs
-router.post('/', authenticateToken, async (req, res) => {
+router.post('/', authenticateToken, shoppingListsRateLimiter, async (req, res) => {
   try {
     if (!req.userId) {
       return res.status(401).json({ error: 'Unauthorized' });
@@ -246,7 +247,7 @@ router.post('/', authenticateToken, async (req, res) => {
 });
 
 // PUT /api/shopping-lists/:id/items/:itemId - Update item status/price/notes
-router.put('/:id/items/:itemId', authenticateToken, async (req, res) => {
+router.put('/:id/items/:itemId', authenticateToken, shoppingListsRateLimiter, async (req, res) => {
   try {
     if (!req.userId) {
       return res.status(401).json({ error: 'Unauthorized' });
@@ -301,7 +302,7 @@ router.put('/:id/items/:itemId', authenticateToken, async (req, res) => {
 });
 
 // DELETE /api/shopping-lists/:id - Delete shopping list
-router.delete('/:id', authenticateToken, async (req, res) => {
+router.delete('/:id', authenticateToken, shoppingListsRateLimiter, async (req, res) => {
   try {
     if (!req.userId) {
       return res.status(401).json({ error: 'Unauthorized' });
