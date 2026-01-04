@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { testConnection, closeConnection } from './database/connection';
 import authRoutes from './routes/auth';
+import shopRoutes from './routes/shops';
 
 dotenv.config();
 
@@ -28,6 +29,7 @@ app.get('/health', async (_req, res) => {
 
 // API routes
 app.use('/api/auth', authRoutes);
+app.use('/api/shops', shopRoutes);
 
 app.get('/api', (_req, res) => {
   res.json({
