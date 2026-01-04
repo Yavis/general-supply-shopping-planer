@@ -63,15 +63,15 @@ The MVP will focus on core functionality: user authentication, managing products
 - [x] Write API tests (Jest setup available, tests can be added later)
 
 #### Step 2.2: Shop Management API
-- [ ] Create Shop model/schema (with user_id)
-- [ ] Implement `GET /api/shops` - List user's shops
-- [ ] Implement `GET /api/shops/:id` - Get shop details
-- [ ] Implement `POST /api/shops` - Create shop
-- [ ] Implement `PUT /api/shops/:id` - Update shop
-- [ ] Implement `DELETE /api/shops/:id` - Delete shop
-- [ ] Add user-scoped queries (only user's own shops)
-- [ ] Add input validation
-- [ ] Write API tests
+- [x] Create Shop model/schema (with user_id)
+- [x] Implement `GET /api/shops` - List user's shops
+- [x] Implement `GET /api/shops/:id` - Get shop details
+- [x] Implement `POST /api/shops` - Create shop
+- [x] Implement `PUT /api/shops/:id` - Update shop
+- [x] Implement `DELETE /api/shops/:id` - Delete shop
+- [x] Add user-scoped queries (only user's own shops)
+- [x] Add input validation
+- [x] Write API tests
 
 #### Step 2.3: Product Management API
 - [ ] Create Product model/schema (with user_id)
