@@ -9,13 +9,13 @@ const router = Router();
 
 // Validation schemas
 const registerSchema = z.object({
-  email: z.string().email(),
+  email: z.email(),
   password: z.string().min(6),
   name: z.string().optional(),
 });
 
 const loginSchema = z.object({
-  email: z.string().email(),
+  email: z.email(),
   password: z.string().min(1),
 });
 
@@ -122,10 +122,14 @@ router.post('/logout', (_req, res) => {
 });
 
 // Get current user endpoint
-router.get('/me', authenticateToken, async (req, res) => {
+router.get('/account', authenticateToken, async (req, res) => {
   try {
+    if (!req.userId) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
     // This will be protected by auth middleware
-    const userId = (req as any).userId;
+    const userId = req.userId;
 
     const user = await prisma.user.findUnique({
       where: { id: userId },
