@@ -57,7 +57,7 @@ The MVP will focus on core functionality: user authentication, managing products
 - [x] Implement `POST /api/auth/register` - User registration
 - [x] Implement `POST /api/auth/login` - User login (returns JWT)
 - [x] Implement `POST /api/auth/logout` - User logout
-- [x] Implement `GET /api/auth/me` - Get current user
+- [x] Implement `GET /api/auth/account` - Get current user
 - [x] Create JWT middleware for protected routes
 - [x] Add input validation
 - [x] Write API tests (Jest setup available, tests can be added later)
