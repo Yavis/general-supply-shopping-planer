@@ -34,7 +34,7 @@ const getOffersQuerySchema = z.object({
 });
 
 // GET /api/offers - List offers with filters
-router.get('/', authenticateToken, offersRateLimiter, async (req, res) => {
+router.get('/', offersRateLimiter, authenticateToken, async (req, res) => {
   try {
     if (!req.userId) {
       return res.status(401).json({ error: 'Unauthorized' });
@@ -110,7 +110,7 @@ router.get('/', authenticateToken, offersRateLimiter, async (req, res) => {
 });
 
 // GET /api/offers/:id - Get offer details
-router.get('/:id', authenticateToken, offersRateLimiter, async (req, res) => {
+router.get('/:id', offersRateLimiter, authenticateToken, async (req, res) => {
   try {
     if (!req.userId) {
       return res.status(401).json({ error: 'Unauthorized' });
@@ -156,7 +156,7 @@ router.get('/:id', authenticateToken, offersRateLimiter, async (req, res) => {
 });
 
 // POST /api/offers - Create offer
-router.post('/', authenticateToken, offersRateLimiter, async (req, res) => {
+router.post('/', offersRateLimiter, authenticateToken, async (req, res) => {
   try {
     if (!req.userId) {
       return res.status(401).json({ error: 'Unauthorized' });
@@ -232,7 +232,7 @@ router.post('/', authenticateToken, offersRateLimiter, async (req, res) => {
 });
 
 // PUT /api/offers/:id - Update offer
-router.put('/:id', authenticateToken, offersRateLimiter, async (req, res) => {
+router.put('/:id', offersRateLimiter, authenticateToken, async (req, res) => {
   try {
     if (!req.userId) {
       return res.status(401).json({ error: 'Unauthorized' });
@@ -312,7 +312,7 @@ router.put('/:id', authenticateToken, offersRateLimiter, async (req, res) => {
 });
 
 // DELETE /api/offers/:id - Delete offer
-router.delete('/:id', authenticateToken, offersRateLimiter, async (req, res) => {
+router.delete('/:id', offersRateLimiter, authenticateToken, async (req, res) => {
   try {
     if (!req.userId) {
       return res.status(401).json({ error: 'Unauthorized' });

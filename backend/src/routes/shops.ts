@@ -18,7 +18,7 @@ const updateShopSchema = z.object({
 });
 
 // GET /api/shops - List user's shops
-router.get('/', authenticateToken, shopsRateLimiter, async (req, res) => {
+router.get('/', shopsRateLimiter, authenticateToken, async (req, res) => {
   try {
     if (!req.userId) {
       return res.status(401).json({ error: 'Unauthorized' });
@@ -43,7 +43,7 @@ router.get('/', authenticateToken, shopsRateLimiter, async (req, res) => {
 });
 
 // GET /api/shops/:id - Get shop details
-router.get('/:id', authenticateToken, shopsRateLimiter, async (req, res) => {
+router.get('/:id', shopsRateLimiter, authenticateToken, async (req, res) => {
   try {
     if (!req.userId) {
       return res.status(401).json({ error: 'Unauthorized' });
@@ -70,7 +70,7 @@ router.get('/:id', authenticateToken, shopsRateLimiter, async (req, res) => {
 });
 
 // POST /api/shops - Create shop
-router.post('/', authenticateToken, shopsRateLimiter, async (req, res) => {
+router.post('/', shopsRateLimiter, authenticateToken, async (req, res) => {
   try {
     if (!req.userId) {
       return res.status(401).json({ error: 'Unauthorized' });
@@ -97,7 +97,7 @@ router.post('/', authenticateToken, shopsRateLimiter, async (req, res) => {
 });
 
 // PUT /api/shops/:id - Update shop
-router.put('/:id', authenticateToken, shopsRateLimiter, async (req, res) => {
+router.put('/:id', shopsRateLimiter, authenticateToken, async (req, res) => {
   try {
     if (!req.userId) {
       return res.status(401).json({ error: 'Unauthorized' });
@@ -134,7 +134,7 @@ router.put('/:id', authenticateToken, shopsRateLimiter, async (req, res) => {
 });
 
 // DELETE /api/shops/:id - Delete shop
-router.delete('/:id', authenticateToken, shopsRateLimiter, async (req, res) => {
+router.delete('/:id', shopsRateLimiter, authenticateToken, async (req, res) => {
   try {
     if (!req.userId) {
       return res.status(401).json({ error: 'Unauthorized' });

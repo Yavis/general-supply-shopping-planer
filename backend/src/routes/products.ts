@@ -25,7 +25,7 @@ const updateProductSchema = z.object({
 });
 
 // GET /api/products - List user's products with search/filter
-router.get('/', authenticateToken, productsRateLimiter, async (req, res) => {
+router.get('/', productsRateLimiter, authenticateToken, async (req, res) => {
   try {
     if (!req.userId) {
       return res.status(401).json({ error: 'Unauthorized' });
@@ -73,7 +73,7 @@ router.get('/', authenticateToken, productsRateLimiter, async (req, res) => {
 });
 
 // GET /api/products/:id - Get product details
-router.get('/:id', authenticateToken, productsRateLimiter, async (req, res) => {
+router.get('/:id', productsRateLimiter, authenticateToken, async (req, res) => {
   try {
     if (!req.userId) {
       return res.status(401).json({ error: 'Unauthorized' });
@@ -109,7 +109,7 @@ router.get('/:id', authenticateToken, productsRateLimiter, async (req, res) => {
 });
 
 // POST /api/products - Create product
-router.post('/', authenticateToken, productsRateLimiter, async (req, res) => {
+router.post('/', productsRateLimiter, authenticateToken, async (req, res) => {
   try {
     if (!req.userId) {
       return res.status(401).json({ error: 'Unauthorized' });
@@ -162,7 +162,7 @@ router.post('/', authenticateToken, productsRateLimiter, async (req, res) => {
 });
 
 // PUT /api/products/:id - Update product
-router.put('/:id', authenticateToken, productsRateLimiter, async (req, res) => {
+router.put('/:id', productsRateLimiter, authenticateToken, async (req, res) => {
   try {
     if (!req.userId) {
       return res.status(401).json({ error: 'Unauthorized' });
@@ -228,7 +228,7 @@ router.put('/:id', authenticateToken, productsRateLimiter, async (req, res) => {
 });
 
 // DELETE /api/products/:id - Delete product
-router.delete('/:id', authenticateToken, productsRateLimiter, async (req, res) => {
+router.delete('/:id', productsRateLimiter, authenticateToken, async (req, res) => {
   try {
     if (!req.userId) {
       return res.status(401).json({ error: 'Unauthorized' });

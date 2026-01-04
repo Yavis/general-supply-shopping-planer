@@ -123,7 +123,7 @@ router.post('/logout', authRateLimiter, (_req, res) => {
 });
 
 // Get current user endpoint
-router.get('/account', authenticateToken, authRateLimiter, async (req, res) => {
+router.get('/account', authRateLimiter, authenticateToken, async (req, res) => {
   try {
     if (!req.userId) {
       return res.status(401).json({ error: 'Unauthorized' });
