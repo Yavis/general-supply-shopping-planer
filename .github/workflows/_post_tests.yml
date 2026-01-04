@@ -1,5 +1,12 @@
 on:
   workflow_call:
+    inputs:
+      jest_status:
+        required: false
+        type: string
+      e2e_status:
+        required: false
+        type: string
 
 jobs:
   cleanup:
@@ -14,3 +21,8 @@ jobs:
       - name: Stop Docker Compose
         run: docker compose down
         if: always()
+
+      - name: Show test results
+        run: |
+          echo "Jest status: ${{ inputs.jest_status }}"
+          echo "E2E status: ${{ inputs.e2e_status }}"
