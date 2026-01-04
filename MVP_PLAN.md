@@ -74,52 +74,52 @@ The MVP will focus on core functionality: user authentication, managing products
 - [x] Write API tests
 
 #### Step 2.3: Product Management API
-- [ ] Create Product model/schema (with user_id)
-- [ ] Implement `GET /api/products` - List user's products (with search/filter)
-- [ ] Implement `GET /api/products/:id` - Get product details
-- [ ] Implement `POST /api/products` - Create product
-  - [ ] Calculate price_per_unit automatically
-- [ ] Implement `PUT /api/products/:id` - Update product
-- [ ] Implement `DELETE /api/products/:id` - Delete product
-- [ ] Add user-scoped queries (only user's own products)
-- [ ] Add search functionality (by name, shop)
-- [ ] Add input validation
-- [ ] Write API tests
+- [x] Create Product model/schema (with user_id)
+- [x] Implement `GET /api/products` - List user's products (with search/filter)
+- [x] Implement `GET /api/products/:id` - Get product details
+- [x] Implement `POST /api/products` - Create product
+  - [x] Calculate price_per_unit automatically
+- [x] Implement `PUT /api/products/:id` - Update product
+- [x] Implement `DELETE /api/products/:id` - Delete product
+- [x] Add user-scoped queries (only user's own products)
+- [x] Add search functionality (by name, shop)
+- [x] Add input validation
+- [x] Write API tests
 
 #### Step 2.4: Offers API
-- [ ] Create Offer model/schema
-- [ ] Implement `GET /api/offers` - List offers
-  - [ ] Filter by product, shop, active status
-  - [ ] Filter by date range (active offers)
-- [ ] Implement `GET /api/offers/:id` - Get offer details
-- [ ] Implement `POST /api/offers` - Create offer
-  - [ ] Validate product and shop exist
-  - [ ] Validate date range (start_time < end_time)
-- [ ] Implement `PUT /api/offers/:id` - Update offer
-- [ ] Implement `DELETE /api/offers/:id` - Delete offer
-- [ ] Add input validation
-- [ ] Write API tests
+- [x] Create Offer model/schema
+- [x] Implement `GET /api/offers` - List offers
+  - [x] Filter by product, shop, active status
+  - [x] Filter by date range (active offers)
+- [x] Implement `GET /api/offers/:id` - Get offer details
+- [x] Implement `POST /api/offers` - Create offer
+  - [x] Validate product and shop exist
+  - [x] Validate date range (start_time < end_time)
+- [x] Implement `PUT /api/offers/:id` - Update offer
+- [x] Implement `DELETE /api/offers/:id` - Delete offer
+- [x] Add input validation
+- [x] Write API tests
 
 #### Step 2.5: Shopping List API
-- [ ] Create ShoppingList and ShoppingListItem models (with user_id)
-- [ ] Implement `GET /api/shopping-lists` - List user's shopping lists
-- [ ] Implement `GET /api/shopping-lists/:id` - Get shopping list with items
-  - [ ] Group items by shop
-  - [ ] Calculate totals per shop
-  - [ ] Calculate overall total
-  - [ ] Ensure user can only access their own lists
-- [ ] Implement `POST /api/shopping-lists` - Create shopping list
-  - [ ] Accept array of product IDs
-  - [ ] Create shopping list items
-  - [ ] Validate products belong to user
-- [ ] Implement `PUT /api/shopping-lists/:id/items/:itemId` - Update item status
-  - [ ] Support status: pending, bought, not_bought, wrong_price, not_available
-  - [ ] Allow updating actual_price
-  - [ ] Allow adding notes
-- [ ] Implement `DELETE /api/shopping-lists/:id` - Delete shopping list
-- [ ] Add user-scoped queries
-- [ ] Add input validation
-- [ ] Write API tests
+- [x] Create ShoppingList and ShoppingListItem models (with user_id)
+- [x] Implement `GET /api/shopping-lists` - List user's shopping lists
+- [x] Implement `GET /api/shopping-lists/:id` - Get shopping list with items
+  - [x] Group items by shop
+  - [x] Calculate totals per shop
+  - [x] Calculate overall total
+  - [x] Ensure user can only access their own lists
+- [x] Implement `POST /api/shopping-lists` - Create shopping list
+  - [x] Accept array of product IDs
+  - [x] Create shopping list items
+  - [x] Validate products belong to user
+- [x] Implement `PUT /api/shopping-lists/:id/items/:itemId` - Update item status
+  - [x] Support status: pending, bought, not_bought, wrong_price, not_available
+  - [x] Allow updating actual_price
+  - [x] Allow adding notes
+- [x] Implement `DELETE /api/shopping-lists/:id` - Delete shopping list
+- [x] Add user-scoped queries
+- [x] Add input validation
+- [x] Write API tests
 
 
 ### Phase 3: Frontend Development (Next.js PWA)

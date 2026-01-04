@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 import { z } from 'zod';
 import { prisma } from '../database/connection';
 import { authenticateToken } from '../middleware/auth';
+import { authRateLimiter } from '../middleware/rate-limit';
 
 const router = Router();
 
@@ -20,7 +21,7 @@ const loginSchema = z.object({
 });
 
 // Register endpoint
-router.post('/register', async (req, res) => {
+router.post('/register', authRateLimiter, async (req, res) => {
   try {
     const { email, password, name } = registerSchema.parse(req.body);
 
@@ -72,7 +73,7 @@ router.post('/register', async (req, res) => {
 });
 
 // Login endpoint
-router.post('/login', async (req, res) => {
+router.post('/login', authRateLimiter, async (req, res) => {
   try {
     const { email, password } = loginSchema.parse(req.body);
 
@@ -117,12 +118,12 @@ router.post('/login', async (req, res) => {
 });
 
 // Logout endpoint (client-side token removal)
-router.post('/logout', (_req, res) => {
+router.post('/logout', authRateLimiter, (_req, res) => {
   res.json({ message: 'Logged out successfully' });
 });
 
 // Get current user endpoint
-router.get('/account', authenticateToken, async (req, res) => {
+router.get('/account', authRateLimiter, authenticateToken, async (req, res) => {
   try {
     if (!req.userId) {
       return res.status(401).json({ error: 'Unauthorized' });
