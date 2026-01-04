@@ -103,7 +103,7 @@ jobs:
         with:
           name: test-results
           path: |
-            backend/junit.xml
+            backend/test-results/junit.xml
             backend/coverage/
 
       - name: Publish Test Results
@@ -111,4 +111,4 @@ jobs:
         if: always()
         with:
           files: |
-            backend/junit.xml
+            backend/test-results/junit.xml

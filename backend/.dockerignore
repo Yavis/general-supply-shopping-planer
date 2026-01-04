@@ -12,5 +12,6 @@ README.md
 *.swp
 *.swo
 coverage
+test-results
 .nyc_output
 
