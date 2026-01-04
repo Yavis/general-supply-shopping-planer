@@ -72,11 +72,13 @@ jobs:
           docker compose exec -T backend npm run db:migrate:deploy
 
       - name: Run Jest tests
+        id: jest
         run: |
           docker compose exec -T backend npm run test -- --ci
         continue-on-error: true
 
       - name: Run E2E smoke tests
+        id: e2e
         run: |
           # Basic smoke test - check API endpoints
           echo "Testing API endpoints..."
@@ -92,6 +94,20 @@ jobs:
           
           echo "✅ All smoke tests passed!"
         continue-on-error: true
+
+      - name: Check test results
+        run: |
+          if [ "${{ steps.jest.outcome }}" = "failure" ]; then
+            echo "❌ Jest tests failed"
+            exit 1
+          fi
+          
+          if [ "${{ steps.e2e.outcome }}" = "failure" ]; then
+            echo "❌ E2E smoke tests failed"
+            exit 1
+          fi
+          
+          echo "✅ All tests passed!"
 
       - name: Stop Docker Compose stack
         run: docker compose down
