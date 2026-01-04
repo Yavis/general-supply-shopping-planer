@@ -50,11 +50,14 @@ process.on('SIGTERM', async () => {
 });
 
 // Start server
-app.listen(PORT, async () => {
-  console.log(`🚀 Server is running on port ${PORT}`);
-  console.log(`📡 Health check: http://localhost:${PORT}/health`);
-  
-  // Test database connection on startup
-  await testConnection();
-});
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(PORT, async () => {
+    console.log(`🚀 Server is running on port ${PORT}`);
+    console.log(`📡 Health check: http://localhost:${PORT}/health`);
+    
+    // Test database connection on startup
+    await testConnection();
+  });
+}
 
+export default app;

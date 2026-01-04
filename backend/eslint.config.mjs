@@ -2,8 +2,12 @@ import { defineConfig } from 'eslint/config'
 import tseslint from '@typescript-eslint/eslint-plugin'
 import tsparser from '@typescript-eslint/parser'
 import globals from 'globals'
+import pluginJest from 'eslint-plugin-jest';
 
 const eslintConfig = defineConfig([
+  {
+    ignores: ['coverage/**', 'dist/**', 'node_modules/**'],
+  },
   {
     files: ['src/**/*.ts'],
     languageOptions: {
@@ -25,6 +29,23 @@ const eslintConfig = defineConfig([
       '@typescript-eslint/explicit-module-boundary-types': 'off',
     },
   },
+  {
+    files: ["tests/**/*"],
+    plugins: { jest: pluginJest },
+    languageOptions: {
+      globals: pluginJest.environments.globals.globals,
+    },
+    rules: {
+      'jest/no-disabled-tests': 'warn',
+      'jest/no-focused-tests': 'error',
+      'jest/no-identical-title': 'error',
+      'jest/prefer-to-have-length': 'warn',
+      'jest/valid-expect': 'error',
+    },
+    env: {
+      "jest/globals": true
+    }
+  }
 ])
 
 export default eslintConfig

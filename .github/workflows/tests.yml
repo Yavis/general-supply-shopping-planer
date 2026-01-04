@@ -1,0 +1,135 @@
+name: Testing
+
+permissions:
+  checks: write
+  pull-requests: write
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  merge_group:
+    branches: [ main ]
+
+jobs:
+  test_unit_and_smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Start Docker Compose stack
+        run: docker compose up -d --build
+
+      - name: Wait for database to be ready
+        run: |
+          for i in {1..30}; do
+            if docker compose exec -T postgres pg_isready -U postgres; then
+              echo "Database is ready"
+              break
+            fi
+            echo "Waiting for database... ($i/30)"
+            sleep 5
+          done
+          if [ $i -eq 30 ]; then
+            echo "Database readiness check failed"
+            exit 1
+          fi
+
+      - name: Wait for backend to be healthy
+        run: |
+          for i in {1..30}; do
+            if curl -f http://localhost:3001/health 2>/dev/null; then
+              echo "Backend is healthy"
+              break
+            fi
+            echo "Waiting for backend... ($i/30)"
+            sleep 10
+          done
+          if [ $i -eq 30 ]; then
+            echo "Backend health check failed"
+            exit 1
+          fi
+
+      - name: Check frontend reachability
+        run: |
+          curl -f http://localhost:3000 || (echo "Frontend not reachable" && exit 1)
+
+      - name: Install backend dependencies
+        run: |
+          docker compose exec -T backend npm ci
+
+      - name: Generate Prisma client
+        run: |
+          docker compose exec -T backend npx prisma generate
+
+      - name: Run database migrations
+        run: |
+          docker compose exec -T backend npm run db:migrate:deploy
+
+      - name: Run E2E smoke tests
+        id: e2e
+        run: |
+          # Basic smoke test - check API endpoints
+          echo "Testing API endpoints..."
+          
+          # Test health endpoint
+          curl -f http://localhost:3001/health || exit 1
+          
+          # Test API root
+          curl -f http://localhost:3001/api || exit 1
+          
+          # Test auth endpoint (should return 401 without auth)
+          curl -s http://localhost:3001/api/auth/account | grep -q "Access token required" || exit 1
+          
+          echo "✅ All smoke tests passed!"
+        continue-on-error: true
+
+      - name: Run Jest tests
+        id: jest
+        run: |
+          if [ "${{ steps.e2e.outcome }}" = "failure" ]; then
+            echo "❌ Skipping Jest tests due to failed E2E smoke tests"
+            exit 1
+          fi
+
+          docker compose exec -T backend npm run test -- --ci
+        continue-on-error: true
+
+      - name: Check test results
+        run: |
+          if [ "${{ steps.e2e.outcome }}" = "failure" ]; then
+            echo "❌ E2E smoke tests failed"
+            exit 1
+          fi
+
+          if [ "${{ steps.jest.outcome }}" = "failure" ]; then
+            echo "❌ Jest tests failed"
+            exit 1
+          fi
+          
+          echo "✅ All tests passed!"
+
+      - name: Stop Docker Compose stack
+        run: docker compose down
+        if: always()
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results
+          path: |
+            backend/test-results/junit.xml
+            backend/coverage/
+
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
+        with:
+          files: |
+            backend/test-results/junit.xml
