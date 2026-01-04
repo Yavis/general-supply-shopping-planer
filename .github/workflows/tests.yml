@@ -1,0 +1,27 @@
+name: Testing
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  merge_group:
+    branches: [ main ]
+
+jobs:
+  prepare:
+    uses: ./.github/workflows/_pre_tests.yml
+
+  jest:
+    needs: prepare
+    uses: ./.github/workflows/_jest.yml
+
+  e2e:
+    needs: jest
+    uses: ./.github/workflows/_e2e_smoke.yml
+
+  cleanup:
+    needs: 
+      - e2e
+      - jest
+    uses: ./.github/workflows/_post_tests.yml

@@ -1,24 +1,13 @@
-name: E2E Tests
+name: E2E Basic smoke Tests
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  workflow_call:
 
 jobs:
   e2e:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v3
-
-    - name: Start Docker Compose
-      run: docker compose up -d --build
 
     - name: Wait for backend health check
       run: |
