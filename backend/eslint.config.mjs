@@ -2,10 +2,12 @@ import { defineConfig } from 'eslint/config'
 import tseslint from '@typescript-eslint/eslint-plugin'
 import tsparser from '@typescript-eslint/parser'
 import globals from 'globals'
-
-const pluginJest = require('eslint-plugin-jest');
+import pluginJest from 'eslint-plugin-jest';
 
 const eslintConfig = defineConfig([
+  {
+    ignores: ['coverage/**', 'dist/**', 'node_modules/**'],
+  },
   {
     files: ['src/**/*.ts'],
     languageOptions: {
