@@ -84,7 +84,7 @@ jobs:
           curl -f http://localhost:3001/api || exit 1
           
           # Test auth endpoint (should return 401 without auth)
-          curl -s http://localhost:3001/api/auth/account | grep -q "Unauthorized" || exit 1
+          curl -s http://localhost:3001/api/auth/account | grep -q "Access token required" || exit 1
           
           echo "✅ All smoke tests passed!"
         continue-on-error: true
