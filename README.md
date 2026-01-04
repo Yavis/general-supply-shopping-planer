@@ -228,7 +228,7 @@ npm run dev
 - `POST /api/auth/register` - Register new user
 - `POST /api/auth/login` - Login user
 - `POST /api/auth/logout` - Logout user
-- `GET /api/auth/me` - Get current user
+- `GET /api/auth/account` - Get current user
 
 ### Products
 - `GET /api/products` - List user's products (with search/filter)
